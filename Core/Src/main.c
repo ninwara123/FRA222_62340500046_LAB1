@@ -191,19 +191,32 @@ int main(void)
 			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
 			}
 		}
-//		//Run LED3
-//		if(HAL_GetTick() - TimeStamp1 >= LED1_HalfPeriod/g)
-//		{
-//			TimeStamp1 = HAL_GetTick();
-//			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
-//			{
-//			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-//			}
-//			else
-//			{
-//			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-//			}
-//		}
+		//Run LED3
+		if(HAL_GetTick() - TimeStamp2 >= LED3_Period_Open)
+		{
+			TimeStamp2 = HAL_GetTick();
+			if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)==GPIO_PIN_SET)
+			{
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+
+				if(HAL_GetTick() - TimeStamp2 >= LED3_Period_Close)
+				{
+					TimeStamp2 = HAL_GetTick();
+					if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)==GPIO_PIN_SET)
+					{
+					 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+					}
+					else
+					{
+					 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+					}
+				}
+			}
+			else
+			{
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			}
+		}
 
   }
   /* USER CODE END 3 */
