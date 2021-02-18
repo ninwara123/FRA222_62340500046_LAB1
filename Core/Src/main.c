@@ -96,7 +96,10 @@ int main(void)
   uint16_t LED1_HalfPeriod = 500; //Hz
   uint32_t TimeStamp = 0;
   uint32_t BTimeStamp = 0;
-  uint8_t c =0;
+//  uint8_t c[2];
+//  c[0]=1;
+  uint8_t d = 1;
+  uint8_t g = 0.5;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,19 +115,29 @@ int main(void)
 		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
 			 if(SwitchState[0] == GPIO_PIN_SET && SwitchState[1] == GPIO_PIN_RESET)
 			 {
-			  if(LED1_HalfPeriod == 500)
-			  {
-			   LED1_HalfPeriod = 100;
-			  }
-			  else
-			  {
-			   LED1_HalfPeriod = 500;
-			  }
+				 d=d+1;
+				 if(d==2)
+				 {
+					 g=1;
+				 }
+				 else if(d==3)
+				 {
+					 g=2;
+				 }
+				 else if (d==4)
+				 {
+					g=3;
+				 }
+				 else
+				 {
+					 g=0.5;
+					 d=1;
+				 }
 			 }
 			 SwitchState[1] = SwitchState[0];
 		}
-		//Run LED
-		if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod)
+		//Run LED1
+		if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod*g)
 		{
 			TimeStamp = HAL_GetTick();
 			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
