@@ -124,14 +124,14 @@ int main(void)
 				c = c+1;
 				if(c==2)
 				{
-					LED3_Period_Open = 1500;
-					LED3_Period_Close = 500;
+					LED3_Period_Open = 500;
+					LED3_Period_Close = 1500;
 
 				}
 				else
 				{
-					LED3_Period_Open = 500;
-					LED3_Period_Close = 1500;
+					LED3_Period_Open = 1500;
+					LED3_Period_Close = 500;
 					c =1;
 				}
 			}
@@ -194,27 +194,20 @@ int main(void)
 		//Run LED3
 		if(HAL_GetTick() - TimeStamp2 >= LED3_Period_Open)
 		{
-			TimeStamp2 = HAL_GetTick();
 			if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)==GPIO_PIN_SET)
 			{
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-
-				if(HAL_GetTick() - TimeStamp2 >= LED3_Period_Close)
-				{
-					TimeStamp2 = HAL_GetTick();
-					if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)==GPIO_PIN_SET)
-					{
-					 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-					}
-					else
-					{
-					 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-					}
-				}
+				TimeStamp2 = HAL_GetTick();
 			}
-			else
+
+		}
+		if(HAL_GetTick() - TimeStamp2 >= LED3_Period_Close)
+		{
+
+			if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)==GPIO_PIN_RESET)
 			{
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+				TimeStamp2 = HAL_GetTick();
 			}
 		}
 
