@@ -93,13 +93,13 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   GPIO_PinState SwitchState[2];
-  uint16_t LED1_HalfPeriod = 500; //Hz
+  uint16_t LED1_HalfPeriod = 100; //Hz
   uint32_t TimeStamp = 0;
   uint32_t BTimeStamp = 0;
 //  uint8_t c[2];
 //  c[0]=1;
   uint8_t d = 1;
-  uint8_t g = 0.5;
+  uint8_t g = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */

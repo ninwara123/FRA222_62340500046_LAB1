@@ -393,140 +393,141 @@ int main(void)
  80004f2:	f000 f8cd 	bl	8000690 <MX_USART2_UART_Init>
   /* USER CODE BEGIN 2 */
   GPIO_PinState SwitchState[2];
-  uint16_t LED1_HalfPeriod = 500; //Hz
- 80004f6:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
- 80004fa:	80bb      	strh	r3, [r7, #4]
+  uint16_t LED1_HalfPeriod = 100; //Hz
+ 80004f6:	2364      	movs	r3, #100	; 0x64
+ 80004f8:	80bb      	strh	r3, [r7, #4]
   uint32_t TimeStamp = 0;
- 80004fc:	2300      	movs	r3, #0
- 80004fe:	60fb      	str	r3, [r7, #12]
+ 80004fa:	2300      	movs	r3, #0
+ 80004fc:	60fb      	str	r3, [r7, #12]
   uint32_t BTimeStamp = 0;
- 8000500:	2300      	movs	r3, #0
- 8000502:	60bb      	str	r3, [r7, #8]
+ 80004fe:	2300      	movs	r3, #0
+ 8000500:	60bb      	str	r3, [r7, #8]
 //  uint8_t c[2];
 //  c[0]=1;
   uint8_t d = 1;
- 8000504:	2301      	movs	r3, #1
- 8000506:	71fb      	strb	r3, [r7, #7]
-  uint8_t g = 0.5;
- 8000508:	2300      	movs	r3, #0
- 800050a:	71bb      	strb	r3, [r7, #6]
+ 8000502:	2301      	movs	r3, #1
+ 8000504:	71fb      	strb	r3, [r7, #7]
+  uint8_t g = 1;
+ 8000506:	2301      	movs	r3, #1
+ 8000508:	71bb      	strb	r3, [r7, #6]
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 		if(HAL_GetTick() - BTimeStamp >= 100)
- 800050c:	f000 fae0 	bl	8000ad0 <HAL_GetTick>
- 8000510:	4602      	mov	r2, r0
- 8000512:	68bb      	ldr	r3, [r7, #8]
- 8000514:	1ad3      	subs	r3, r2, r3
- 8000516:	2b63      	cmp	r3, #99	; 0x63
- 8000518:	d92a      	bls.n	8000570 <main+0x98>
+ 800050a:	f000 fae1 	bl	8000ad0 <HAL_GetTick>
+ 800050e:	4602      	mov	r2, r0
+ 8000510:	68bb      	ldr	r3, [r7, #8]
+ 8000512:	1ad3      	subs	r3, r2, r3
+ 8000514:	2b63      	cmp	r3, #99	; 0x63
+ 8000516:	d92a      	bls.n	800056e <main+0x96>
 		{
 		  BTimeStamp = HAL_GetTick();
- 800051a:	f000 fad9 	bl	8000ad0 <HAL_GetTick>
- 800051e:	60b8      	str	r0, [r7, #8]
+ 8000518:	f000 fada 	bl	8000ad0 <HAL_GetTick>
+ 800051c:	60b8      	str	r0, [r7, #8]
 		  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
- 8000520:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000524:	4824      	ldr	r0, [pc, #144]	; (80005b8 <main+0xe0>)
- 8000526:	f000 fd47 	bl	8000fb8 <HAL_GPIO_ReadPin>
- 800052a:	4603      	mov	r3, r0
- 800052c:	703b      	strb	r3, [r7, #0]
+ 800051e:	f44f 6180 	mov.w	r1, #1024	; 0x400
+ 8000522:	4825      	ldr	r0, [pc, #148]	; (80005b8 <main+0xe0>)
+ 8000524:	f000 fd48 	bl	8000fb8 <HAL_GPIO_ReadPin>
+ 8000528:	4603      	mov	r3, r0
+ 800052a:	703b      	strb	r3, [r7, #0]
 			 if(SwitchState[0] == GPIO_PIN_SET && SwitchState[1] == GPIO_PIN_RESET)
- 800052e:	783b      	ldrb	r3, [r7, #0]
- 8000530:	2b01      	cmp	r3, #1
- 8000532:	d11b      	bne.n	800056c <main+0x94>
- 8000534:	787b      	ldrb	r3, [r7, #1]
- 8000536:	2b00      	cmp	r3, #0
- 8000538:	d118      	bne.n	800056c <main+0x94>
+ 800052c:	783b      	ldrb	r3, [r7, #0]
+ 800052e:	2b01      	cmp	r3, #1
+ 8000530:	d11b      	bne.n	800056a <main+0x92>
+ 8000532:	787b      	ldrb	r3, [r7, #1]
+ 8000534:	2b00      	cmp	r3, #0
+ 8000536:	d118      	bne.n	800056a <main+0x92>
 			 {
 				 d=d+1;
- 800053a:	79fb      	ldrb	r3, [r7, #7]
- 800053c:	3301      	adds	r3, #1
- 800053e:	71fb      	strb	r3, [r7, #7]
+ 8000538:	79fb      	ldrb	r3, [r7, #7]
+ 800053a:	3301      	adds	r3, #1
+ 800053c:	71fb      	strb	r3, [r7, #7]
 				 if(d==2)
- 8000540:	79fb      	ldrb	r3, [r7, #7]
- 8000542:	2b02      	cmp	r3, #2
- 8000544:	d102      	bne.n	800054c <main+0x74>
+ 800053e:	79fb      	ldrb	r3, [r7, #7]
+ 8000540:	2b02      	cmp	r3, #2
+ 8000542:	d102      	bne.n	800054a <main+0x72>
 				 {
 					 g=1;
- 8000546:	2301      	movs	r3, #1
- 8000548:	71bb      	strb	r3, [r7, #6]
- 800054a:	e00f      	b.n	800056c <main+0x94>
+ 8000544:	2301      	movs	r3, #1
+ 8000546:	71bb      	strb	r3, [r7, #6]
+ 8000548:	e00f      	b.n	800056a <main+0x92>
 				 }
 				 else if(d==3)
- 800054c:	79fb      	ldrb	r3, [r7, #7]
- 800054e:	2b03      	cmp	r3, #3
- 8000550:	d102      	bne.n	8000558 <main+0x80>
+ 800054a:	79fb      	ldrb	r3, [r7, #7]
+ 800054c:	2b03      	cmp	r3, #3
+ 800054e:	d102      	bne.n	8000556 <main+0x7e>
 				 {
 					 g=2;
- 8000552:	2302      	movs	r3, #2
- 8000554:	71bb      	strb	r3, [r7, #6]
- 8000556:	e009      	b.n	800056c <main+0x94>
+ 8000550:	2302      	movs	r3, #2
+ 8000552:	71bb      	strb	r3, [r7, #6]
+ 8000554:	e009      	b.n	800056a <main+0x92>
 				 }
 				 else if (d==4)
- 8000558:	79fb      	ldrb	r3, [r7, #7]
- 800055a:	2b04      	cmp	r3, #4
- 800055c:	d102      	bne.n	8000564 <main+0x8c>
+ 8000556:	79fb      	ldrb	r3, [r7, #7]
+ 8000558:	2b04      	cmp	r3, #4
+ 800055a:	d102      	bne.n	8000562 <main+0x8a>
 				 {
 					g=3;
- 800055e:	2303      	movs	r3, #3
- 8000560:	71bb      	strb	r3, [r7, #6]
- 8000562:	e003      	b.n	800056c <main+0x94>
+ 800055c:	2303      	movs	r3, #3
+ 800055e:	71bb      	strb	r3, [r7, #6]
+ 8000560:	e003      	b.n	800056a <main+0x92>
 				 }
 				 else
 				 {
 					 g=0.5;
- 8000564:	2300      	movs	r3, #0
- 8000566:	71bb      	strb	r3, [r7, #6]
+ 8000562:	2300      	movs	r3, #0
+ 8000564:	71bb      	strb	r3, [r7, #6]
 					 d=1;
- 8000568:	2301      	movs	r3, #1
- 800056a:	71fb      	strb	r3, [r7, #7]
+ 8000566:	2301      	movs	r3, #1
+ 8000568:	71fb      	strb	r3, [r7, #7]
 				 }
 			 }
 			 SwitchState[1] = SwitchState[0];
- 800056c:	783b      	ldrb	r3, [r7, #0]
- 800056e:	707b      	strb	r3, [r7, #1]
+ 800056a:	783b      	ldrb	r3, [r7, #0]
+ 800056c:	707b      	strb	r3, [r7, #1]
 		}
 		//Run LED1
 		if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod*g)
- 8000570:	f000 faae 	bl	8000ad0 <HAL_GetTick>
- 8000574:	4602      	mov	r2, r0
- 8000576:	68fb      	ldr	r3, [r7, #12]
- 8000578:	1ad3      	subs	r3, r2, r3
- 800057a:	88ba      	ldrh	r2, [r7, #4]
- 800057c:	79b9      	ldrb	r1, [r7, #6]
- 800057e:	fb01 f202 	mul.w	r2, r1, r2
- 8000582:	4293      	cmp	r3, r2
- 8000584:	d3c2      	bcc.n	800050c <main+0x34>
+ 800056e:	f000 faaf 	bl	8000ad0 <HAL_GetTick>
+ 8000572:	4602      	mov	r2, r0
+ 8000574:	68fb      	ldr	r3, [r7, #12]
+ 8000576:	1ad3      	subs	r3, r2, r3
+ 8000578:	88ba      	ldrh	r2, [r7, #4]
+ 800057a:	79b9      	ldrb	r1, [r7, #6]
+ 800057c:	fb01 f202 	mul.w	r2, r1, r2
+ 8000580:	4293      	cmp	r3, r2
+ 8000582:	d3c2      	bcc.n	800050a <main+0x32>
 		{
 			TimeStamp = HAL_GetTick();
- 8000586:	f000 faa3 	bl	8000ad0 <HAL_GetTick>
- 800058a:	60f8      	str	r0, [r7, #12]
+ 8000584:	f000 faa4 	bl	8000ad0 <HAL_GetTick>
+ 8000588:	60f8      	str	r0, [r7, #12]
 			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
- 800058c:	f44f 7100 	mov.w	r1, #512	; 0x200
- 8000590:	4809      	ldr	r0, [pc, #36]	; (80005b8 <main+0xe0>)
- 8000592:	f000 fd11 	bl	8000fb8 <HAL_GPIO_ReadPin>
- 8000596:	4603      	mov	r3, r0
- 8000598:	2b01      	cmp	r3, #1
- 800059a:	d106      	bne.n	80005aa <main+0xd2>
+ 800058a:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 800058e:	480a      	ldr	r0, [pc, #40]	; (80005b8 <main+0xe0>)
+ 8000590:	f000 fd12 	bl	8000fb8 <HAL_GPIO_ReadPin>
+ 8000594:	4603      	mov	r3, r0
+ 8000596:	2b01      	cmp	r3, #1
+ 8000598:	d106      	bne.n	80005a8 <main+0xd0>
 			{
 			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
- 800059c:	2200      	movs	r2, #0
- 800059e:	f44f 7100 	mov.w	r1, #512	; 0x200
- 80005a2:	4805      	ldr	r0, [pc, #20]	; (80005b8 <main+0xe0>)
- 80005a4:	f000 fd20 	bl	8000fe8 <HAL_GPIO_WritePin>
- 80005a8:	e7b0      	b.n	800050c <main+0x34>
+ 800059a:	2200      	movs	r2, #0
+ 800059c:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 80005a0:	4805      	ldr	r0, [pc, #20]	; (80005b8 <main+0xe0>)
+ 80005a2:	f000 fd21 	bl	8000fe8 <HAL_GPIO_WritePin>
+ 80005a6:	e7b0      	b.n	800050a <main+0x32>
 			}
 			else
 			{
 			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
- 80005aa:	2201      	movs	r2, #1
- 80005ac:	f44f 7100 	mov.w	r1, #512	; 0x200
- 80005b0:	4801      	ldr	r0, [pc, #4]	; (80005b8 <main+0xe0>)
- 80005b2:	f000 fd19 	bl	8000fe8 <HAL_GPIO_WritePin>
+ 80005a8:	2201      	movs	r2, #1
+ 80005aa:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 80005ae:	4802      	ldr	r0, [pc, #8]	; (80005b8 <main+0xe0>)
+ 80005b0:	f000 fd1a 	bl	8000fe8 <HAL_GPIO_WritePin>
 		if(HAL_GetTick() - BTimeStamp >= 100)
- 80005b6:	e7a9      	b.n	800050c <main+0x34>
+ 80005b4:	e7a9      	b.n	800050a <main+0x32>
+ 80005b6:	bf00      	nop
  80005b8:	40020000 	.word	0x40020000
 
 080005bc <SystemClock_Config>:
