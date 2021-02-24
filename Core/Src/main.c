@@ -183,7 +183,7 @@ int main(void)
 
 		}
 		//Run LED1
-		if(HAL_GetTick() - TimeStamp1 >= LED1_HalfPeriod/g)
+		if(HAL_GetTick() - TimeStamp1 >= LED1_HalfPeriod)
 		{
 			TimeStamp1 = HAL_GetTick();
 			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)==GPIO_PIN_SET)
